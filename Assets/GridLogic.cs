@@ -126,7 +126,7 @@ public class GridLogic : MonoBehaviour
         {
             if (i < pointcount)
             {
-                Debug.Log("move");
+                // Debug.Log("move");
                 sphere.transform.position = points[i];
                 i++;
                 yield return new WaitForSeconds(DelayTime);
