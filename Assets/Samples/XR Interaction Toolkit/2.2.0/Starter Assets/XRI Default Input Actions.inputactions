@@ -1499,22 +1499,13 @@
             "id": "ec8b7517-20b1-40d5-9eb2-ec500e07a84a",
             "actions": [
                 {
-                    "name": "Print",
+                    "name": "Respond To Stimulus",
                     "type": "Button",
                     "id": "d5a436e1-5994-4093-982a-7bb252f99fbd",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Color",
-                    "type": "Value",
-                    "id": "f0f3e0a4-25a8-4cb5-9ba8-bd341f1eb7b0",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -1525,18 +1516,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Print",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "23d0f2fa-2262-4b0d-a4be-c033d4cd3454",
-                    "path": "<OculusTouchController>/trigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Color",
+                    "action": "Respond To Stimulus",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

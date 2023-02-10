@@ -6,6 +6,8 @@ public class GridLogic : MonoBehaviour
 {
     private static System.Random rng = new System.Random();
     public GameObject sphere;
+    public GameObject pointPrefab;
+    public GameObject pointsFolder;
     public float DelayTime;
 
     public List<Vector3> Shuffle(List<Vector3> list)
@@ -115,6 +117,13 @@ public class GridLogic : MonoBehaviour
         points.Add(new Vector3(27, -3, 10));
 
         points = Shuffle(points);
+        foreach(Vector3 point in points)
+        {
+            GameObject prefab = Instantiate(pointPrefab, point, Quaternion.identity);
+            prefab.transform.parent = pointsFolder.transform;
+        }
+        pointsFolder.SetActive(false);
+        
         StartCoroutine(nextPos());
     }
 
