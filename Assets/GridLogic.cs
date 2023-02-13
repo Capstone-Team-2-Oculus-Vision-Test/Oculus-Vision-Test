@@ -9,6 +9,7 @@ public class GridLogic : MonoBehaviour
     public GameObject pointPrefab;
     public GameObject pointsFolder;
     public float DelayTime;
+    public float brightness;
 
     public List<Vector3> Shuffle(List<Vector3> list)
     {
@@ -130,6 +131,7 @@ public class GridLogic : MonoBehaviour
     IEnumerator nextPos()
     {
         int pointcount = points.Count;
+        float h, s, v;
         int i = 0;
         while (true)
         {
@@ -138,6 +140,9 @@ public class GridLogic : MonoBehaviour
                 // Debug.Log("move");
                 sphere.transform.position = points[i];
                 i++;
+                Color.RGBToHSV(sphere.GetComponent<MeshRenderer>().material.color, out h, out s, out v);
+                s = brightness;
+                sphere.GetComponent<MeshRenderer>().material.color = Color.HSVToRGB(h, s, v);
                 yield return new WaitForSeconds(DelayTime);
             }
             else
