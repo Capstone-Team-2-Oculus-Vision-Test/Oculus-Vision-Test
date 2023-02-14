@@ -1506,17 +1506,48 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Change Eye",
+                    "type": "Button",
+                    "id": "dcf92770-e050-4637-bb90-344e20589316",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "4afadfe0-758c-4da6-83ef-2117c17c56f1",
-                    "path": "<OculusTouchController>/primaryButton",
+                    "path": "<XRController>/primaryButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Respond To Stimulus",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f9f2dd18-6731-451f-acc0-9586e17f21a5",
+                    "path": "<XRController>/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Change Eye",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "68a1ee5b-d00a-4516-b92a-97cf51f4ad82",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Change Eye",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

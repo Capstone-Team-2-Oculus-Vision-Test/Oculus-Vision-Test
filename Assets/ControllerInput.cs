@@ -10,7 +10,9 @@ public class ControllerInput : MonoBehaviour
     public GameObject gridGen;
     public Vector4 previousResponse = new Vector4(0,0,0,0);
     private Renderer sphereRenderer;
-    private Camera camera_Component;
+    public Camera camera_Component;
+    private string curr_Eye = "Both";
+
     List<Vector4> data = new List<Vector4>();
     // Start is called before the first frame update
     private void Start()
@@ -44,7 +46,6 @@ public class ControllerInput : MonoBehaviour
     }
     private void SwapEye(InputAction.CallbackContext context)
     {
-        string curr_Eye = "Both";
         if (curr_Eye == "Both")
         {
             curr_Eye = "Left";

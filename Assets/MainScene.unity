@@ -1166,11 +1166,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   primaryButtonRef: {fileID: -3108898752110237071, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
-  secondaryButtonRef: {fileID: 1120369429361536294, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  secondaryButtonRef: {fileID: 4788146229824961423, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   sphere: {fileID: 879027315}
-  previousResponse: {x: 0, y: 0, z: 0}
-  flashesRespondedTo: []
+  gridGen: {fileID: 0}
+  previousResponse: {x: 0, y: 0, z: 0, w: 0}
 --- !u!4 &1147857962
 Transform:
   m_ObjectHideFlags: 0
