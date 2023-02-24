@@ -25,133 +25,76 @@ public class GridLogic : MonoBehaviour
         return list;
     }
 
-    List<Vector3> points = new List<Vector3>();
+    public List<Vector4> points = new List<Vector4>();
     // Start is called before the first frame update
     void Start()
     {
-        //row 1
-        points.Add(new Vector3(-9, 27, 10));
-        points.Add(new Vector3(-3, 27, 10));
-        points.Add(new Vector3(3, 27, 10));
-        points.Add(new Vector3(9, 27, 10));
-        //row 2
-        points.Add(new Vector3(-15, 21, 10));
-        points.Add(new Vector3(-9, 21, 10));
-        points.Add(new Vector3(-3, 21, 10));
-        points.Add(new Vector3(3, 21, 10));
-        points.Add(new Vector3(9, 21, 10));
-        points.Add(new Vector3(15, 21, 10));
-        //row 3
-        points.Add(new Vector3(-21, 15, 10));
-        points.Add(new Vector3(-15, 15, 10));
-        points.Add(new Vector3(-9, 15, 10));
-        points.Add(new Vector3(-3, 15, 10));
-        points.Add(new Vector3(3, 15, 10));
-        points.Add(new Vector3(9, 15, 10));
-        points.Add(new Vector3(15, 15, 10));
-        points.Add(new Vector3(21, 15, 10));
-        //row 4
-        points.Add(new Vector3(-27, 9, 10));
-        points.Add(new Vector3(-21, 9, 10));
-        points.Add(new Vector3(-15, 9, 10));
-        points.Add(new Vector3(-9, 9, 10));
-        points.Add(new Vector3(-3, 9, 10));
-        points.Add(new Vector3(3, 9, 10));
-        points.Add(new Vector3(9, 9, 10));
-        points.Add(new Vector3(15, 9, 10));
-        points.Add(new Vector3(21, 9, 10));
-        points.Add(new Vector3(27, 9, 10));
-        //row 5
-        points.Add(new Vector3(-27, 3, 10));
-        points.Add(new Vector3(-21, 3, 10));
-        points.Add(new Vector3(-15, 3, 10));
-        points.Add(new Vector3(-9, 3, 10));
-        points.Add(new Vector3(-3, 3, 10));
-        points.Add(new Vector3(3, 3, 10));
-        points.Add(new Vector3(9, 3, 10));
-        points.Add(new Vector3(15, 3, 10));
-        points.Add(new Vector3(21, 3, 10));
-        points.Add(new Vector3(27, 3, 10));
-        //negative
-        //row 1
-        points.Add(new Vector3(-9, -27, 10));
-        points.Add(new Vector3(-3, -27, 10));
-        points.Add(new Vector3(3, -27, 10));
-        points.Add(new Vector3(9, -27, 10));
-        //row 2
-        points.Add(new Vector3(-15, -21, 10));
-        points.Add(new Vector3(-9, -21, 10));
-        points.Add(new Vector3(-3, -21, 10));
-        points.Add(new Vector3(3, -21, 10));
-        points.Add(new Vector3(9, -21, 10));
-        points.Add(new Vector3(15, -21, 10));
-        //row 3
-        points.Add(new Vector3(-21, -15, 10));
-        points.Add(new Vector3(-15, -15, 10));
-        points.Add(new Vector3(-9, -15, 10));
-        points.Add(new Vector3(-3, -15, 10));
-        points.Add(new Vector3(3, -15, 10));
-        points.Add(new Vector3(9, -15, 10));
-        points.Add(new Vector3(15, -15, 10));
-        points.Add(new Vector3(21, -15, 10));
-        //row 4
-        points.Add(new Vector3(-27, -9, 10));
-        points.Add(new Vector3(-21, -9, 10));
-        points.Add(new Vector3(-15, -9, 10));
-        points.Add(new Vector3(-9, -9, 10));
-        points.Add(new Vector3(-3, -9, 10));
-        points.Add(new Vector3(3, -9, 10));
-        points.Add(new Vector3(9, -9, 10));
-        points.Add(new Vector3(15, -9, 10));
-        points.Add(new Vector3(21, -9, 10));
-        points.Add(new Vector3(27, -9, 10));
-        //row 5
-        points.Add(new Vector3(-27, -3, 10));
-        points.Add(new Vector3(-21, -3, 10));
-        points.Add(new Vector3(-15, -3, 10));
-        points.Add(new Vector3(-9, -3, 10));
-        points.Add(new Vector3(-3, -3, 10));
-        points.Add(new Vector3(3, -3, 10));
-        points.Add(new Vector3(9, -3, 10));
-        points.Add(new Vector3(15, -3, 10));
-        points.Add(new Vector3(21, -3, 10));
-        points.Add(new Vector3(27, -3, 10));
-
-        points = Shuffle(points);
-        foreach(Vector3 point in points)
-        {
-            GameObject prefab = Instantiate(pointPrefab, point, Quaternion.identity);
-            prefab.transform.parent = pointsFolder.transform;
-        }
-        pointsFolder.SetActive(false);
-        
-        StartCoroutine(nextPos());
+        CreateGridCoordinates();
+        CreateVisualGrid();
+        StartCoroutine(MoveLightFlash());
     }
 
-    IEnumerator nextPos()
+    IEnumerator MoveLightFlash()
     {
-        int pointcount = points.Count;
-        float h, s, v;
-        int i = 0;
         while (true)
         {
-            if (i < pointcount)
+            int randomIndex = Random.Range(0, points.Count);
+            Vector4 randomPoint = points[randomIndex];
+            Vector3 position = new Vector3(randomPoint.x,randomPoint.y,randomPoint.z);
+            float opacity = randomPoint.w;
+            sphere.transform.position = position;
+            SetSphereOpacity(sphere, opacity);
+
+            randomPoint.w -= 30f;
+            if (randomPoint.w <= 0f)
             {
-                // Debug.Log("move");
-                sphere.transform.position = points[i];
-                i++;
-                Color.RGBToHSV(sphere.GetComponent<MeshRenderer>().material.color, out h, out s, out v);
-                s = brightness;
-                sphere.GetComponent<MeshRenderer>().material.color = Color.HSVToRGB(h, s, v);
-                yield return new WaitForSeconds(DelayTime);
+                points.RemoveAt(randomIndex);
             }
             else
             {
-                points = Shuffle(points);
-                i = 0;
+                points[randomIndex] = randomPoint;
+            }
+            yield return new WaitForSeconds(DelayTime);
+        }
+        
+    }
+
+    private void SetSphereOpacity(GameObject sphere, float opacity)
+    {
+        Material material = sphere.GetComponent<Renderer>().material;
+        Color color = Color.HSVToRGB(0,0,opacity);
+        material.SetColor("_EmissionColor", color * 0.01f);
+    }
+
+    void CreateGridCoordinates()
+    {
+        int max = 27;
+        for (int y = 3; y <= 27; y += 6)
+        {
+            if (y > 9)
+            {
+                max -= 6;
+            }
+
+            for (int x = -max; x <= max; x += 6)
+            {
+                Vector4 vec = new Vector4(x, y, 10, brightness);
+                Vector4 vec2 = new Vector4(x, -y, 10, brightness);
+                points.Add(vec);
+                points.Add(vec2);
             }
         }
     }
 
+    private void CreateVisualGrid()
+    {
+        foreach (Vector4 point in points)
+        {
+            Vector3 position = new Vector3(point.x, point.y, point.z);
+            GameObject prefab = Instantiate(pointPrefab, position, Quaternion.identity);
+            prefab.transform.parent = pointsFolder.transform;
+        }
+        pointsFolder.SetActive(false);
+    }
 
 }
