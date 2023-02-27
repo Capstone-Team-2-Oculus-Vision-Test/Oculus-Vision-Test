@@ -39,7 +39,7 @@ public class EyeTarget : MonoBehaviour
 
         else
         {
-            Debug.Log("No");
+            //Debug.Log("No");
             //meshRenderer.material = OnHoverInactiveMaterial;
         }
     }

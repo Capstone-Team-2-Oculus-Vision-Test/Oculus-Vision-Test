@@ -138,7 +138,7 @@ public class GridLogic : MonoBehaviour
             if (i < pointcount)
             {
                 // Debug.Log("move");
-                sphere.transform.position = points[i];
+                sphere.transform.localPosition = points[i];
                 i++;
                 Color.RGBToHSV(sphere.GetComponent<MeshRenderer>().material.color, out h, out s, out v);
                 s = brightness;
