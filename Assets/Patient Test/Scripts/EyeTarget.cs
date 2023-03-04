@@ -32,15 +32,15 @@ public class EyeTarget : MonoBehaviour
     {
         if(IsHovered)
         {
-            //meshRenderer.material = OnHoverActiveMaterial;
-            Debug.Log("Yes");
+            meshRenderer.material = OnHoverActiveMaterial;
+            //Debug.Log("Yes");
             OnObjectHover?.Invoke(gameObject);
         }
 
         else
         {
             //Debug.Log("No");
-            //meshRenderer.material = OnHoverInactiveMaterial;
+            meshRenderer.material = OnHoverInactiveMaterial;
         }
     }
 }

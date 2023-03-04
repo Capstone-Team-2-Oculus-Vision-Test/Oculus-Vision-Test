@@ -54,11 +54,13 @@ public class EyeTrackingRay : MonoBehaviour
 
         if(Physics.Raycast(transform.position, rayCastDirection, out hit, Mathf.Infinity, layersInclude))
         {
+            //Debug.Log("Ray Hit:" + hit.transform.name);
             UnSelect();
             lineRenderer.startColor = rayColorState;
             lineRenderer.endColor = rayColorState;
             var eyeInteractable = hit.transform.GetComponent<EyeTarget>();
             eyeList.Add(eyeInteractable);
+            //if(eyeInteractable != null)
             eyeInteractable.IsHovered = true;
         }
 
@@ -72,6 +74,7 @@ public class EyeTrackingRay : MonoBehaviour
 
     void UnSelect(bool clear = false)
     {
+        //Debug.Log(eyeList[0]);
         foreach(var interactable in eyeList)
         {
             interactable.IsHovered = false;
@@ -81,10 +84,5 @@ public class EyeTrackingRay : MonoBehaviour
         {
             eyeList.Clear();
         }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
