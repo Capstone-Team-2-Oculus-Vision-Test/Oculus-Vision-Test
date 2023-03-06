@@ -738,8 +738,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
+      propertyPath: delayTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
       propertyPath: brightness
-      value: 75
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
       propertyPath: pointPrefab
