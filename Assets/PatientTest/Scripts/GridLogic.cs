@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace PatientTest.Scripts
 {
@@ -29,24 +28,21 @@ namespace PatientTest.Scripts
         public List<Vector4> points = new();
 
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+        private Renderer _renderer;
 
         // Start is called before the first frame update
         private void Start()
         {
-            StartTest(EyeEnum.Left, TestEnum.TwentyDashTwo);
+            _renderer = sphere.GetComponent<Renderer>();
+            StartCoroutine(StartTest(EyeEnum.Left, TestEnum.TwentyDashTwo));
         }
 
-        private void StartTest(EyeEnum eye, TestEnum test)
+        public IEnumerator StartTest(EyeEnum eye, TestEnum test)
         {
-            _sphereMaterial = sphere.GetComponent<Renderer>().material;
+            _sphereMaterial = _renderer.material;
             eyeResults = new List<Vector4>();
             CreateGridCoordinates(eye, test);
             CreateVisualGrid();
-            StartCoroutine(MoveLightFlash());
-        }
-
-        private IEnumerator MoveLightFlash()
-        {
             while (points.Count > 0)
             {
                 var responded = false;
@@ -73,9 +69,9 @@ namespace PatientTest.Scripts
                 randomPoint.w += 10f;
                 points[randomIndex] = randomPoint;
             }
-        
+            yield return eyeResults;
         }
-
+        
         private void HandleInput(int index)
         {
             eyeResults.Add(points[index]);
