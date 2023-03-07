@@ -8,6 +8,7 @@ public class MainCameraHandler : MonoBehaviour
     void Start()
     {
         transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.SetActive(true);
     }
 
     // Update is called once per frame

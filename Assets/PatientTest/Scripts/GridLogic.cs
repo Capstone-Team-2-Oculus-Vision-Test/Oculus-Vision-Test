@@ -21,6 +21,8 @@ namespace PatientTest.Scripts
         public GameObject sphere;
         public GameObject pointPrefab;
         public GameObject pointsFolder;
+        public Camera leftEyeCamera;
+        public Camera rightEyeCamera;
         public float delayTime;
         public float brightness;
         private Material _sphereMaterial;
@@ -34,11 +36,20 @@ namespace PatientTest.Scripts
         private void Start()
         {
             _renderer = sphere.GetComponent<Renderer>();
-            StartCoroutine(StartTest(EyeEnum.Left, TestEnum.TwentyDashTwo));
+            StartCoroutine(StartTest(EyeEnum.Right, TestEnum.TwentyDashTwo));
         }
 
         public IEnumerator StartTest(EyeEnum eye, TestEnum test)
         {
+            if (eye == EyeEnum.Right)
+            {
+                leftEyeCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("Default"));
+
+            }
+            else
+            {
+                rightEyeCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("Default"));
+            }
             _sphereMaterial = _renderer.material;
             eyeResults = new List<Vector4>();
             CreateGridCoordinates(eye, test);
@@ -52,7 +63,9 @@ namespace PatientTest.Scripts
                 float opacity = randomPoint.w;
                 sphere.transform.localPosition = position;
                 SetSphereOpacity(opacity);
-
+                sphere.SetActive(true);
+                yield return new WaitForSeconds(0.2f);
+                sphere.SetActive(false);
                 var time = 0f;
                 while (time < delayTime)
                 {
