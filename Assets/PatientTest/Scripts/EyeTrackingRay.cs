@@ -52,10 +52,11 @@ public class EyeTrackingRay : MonoBehaviour
 
         Vector3 rayCastDirection = transform.TransformDirection(Vector3.forward) * rayDistance;
 
-        if(Physics.Raycast(transform.position, rayCastDirection, out hit, Mathf.Infinity, layersInclude))
-        {
-            //Debug.Log("Ray Hit:" + hit.transform.name);
-            UnSelect();
+            //if(Physics.Raycast(transform.position, new Vector3(3,3,3), out hit, Mathf.Infinity, layersInclude))
+            if(Physics.Raycast(transform.position, rayCastDirection, out hit, Mathf.Infinity, layersInclude))
+            {
+                //Debug.Log("Ray Hit:" + hit.transform.name);
+                UnSelect();
             lineRenderer.startColor = rayColorState;
             lineRenderer.endColor = rayColorState;
             var eyeInteractable = hit.transform.GetComponent<EyeTarget>();

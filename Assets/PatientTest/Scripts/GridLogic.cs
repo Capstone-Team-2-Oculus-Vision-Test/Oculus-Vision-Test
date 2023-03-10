@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace PatientTest.Scripts
 {
@@ -26,6 +28,9 @@ namespace PatientTest.Scripts
         public float delayTime;
         public float brightness;
         private Material _sphereMaterial;
+        private IEnumerator _testCoroutine;
+        private bool _pause;
+        private (EyeEnum eye, TestEnum test) _testParameters;
 
         public List<Vector4> points = new();
 
@@ -36,11 +41,41 @@ namespace PatientTest.Scripts
         private void Start()
         {
             _renderer = sphere.GetComponent<Renderer>();
-            StartCoroutine(StartTest(EyeEnum.Right, TestEnum.TwentyDashTwo));
+            _testCoroutine = StartTest(EyeEnum.Left, TestEnum.TwentyDashTwo);
+            StartCoroutine(_testCoroutine);
         }
 
+        public void StopTest()
+        {
+            if (OVRInput.GetDown(OVRInput.Button.Any))
+                return;
+            StopCoroutine(_testCoroutine);
+            Debug.Log("Test Stopped.");
+        }
+
+        public void ResetTest()
+        {
+            if (OVRInput.GetDown(OVRInput.Button.Any))
+                return;
+            StopCoroutine(_testCoroutine);
+            eyeResults.Clear();
+            points.Clear();
+            _testCoroutine = null;
+            _testCoroutine = StartTest(_testParameters.Item1, _testParameters.Item2);
+            StartCoroutine(_testCoroutine);
+        }
+
+        public void PauseTest()
+        {
+            if (OVRInput.GetDown(OVRInput.Button.Any))
+                return;
+            _pause = !_pause;
+
+            // Time.timeScale = Math.Abs(Time.timeScale - 1f) < 0f ? 0 : 1f;
+        }
         public IEnumerator StartTest(EyeEnum eye, TestEnum test)
         {
+            
             if (eye == EyeEnum.Right)
             {
                 leftEyeCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("Default"));
@@ -50,12 +85,16 @@ namespace PatientTest.Scripts
             {
                 rightEyeCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("Default"));
             }
+
+            _testParameters = (eye, test);
+            _pause = false;
             _sphereMaterial = _renderer.material;
             eyeResults = new List<Vector4>();
             CreateGridCoordinates(eye, test);
             CreateVisualGrid();
             while (points.Count > 0)
             {
+                yield return new WaitUntil(() => !_pause);
                 var responded = false;
                 int randomIndex = Random.Range(0, points.Count);
                 Vector4 randomPoint = points[randomIndex];
