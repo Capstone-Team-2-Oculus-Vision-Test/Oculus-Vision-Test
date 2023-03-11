@@ -41,7 +41,7 @@ namespace PatientTest.Scripts
         private void Start()
         {
             _renderer = sphere.GetComponent<Renderer>();
-            _testCoroutine = StartTest(EyeEnum.Left, TestEnum.TwentyDashTwo);
+            _testCoroutine = StartTest((EyeEnum)PlayerPrefs.GetInt("Eye"), (TestEnum)PlayerPrefs.GetInt("TestType"));
             StartCoroutine(_testCoroutine);
         }
 
@@ -75,7 +75,7 @@ namespace PatientTest.Scripts
         }
         public IEnumerator StartTest(EyeEnum eye, TestEnum test)
         {
-            
+
             if (eye == EyeEnum.Right)
             {
                 leftEyeCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("Default"));
@@ -98,7 +98,7 @@ namespace PatientTest.Scripts
                 var responded = false;
                 int randomIndex = Random.Range(0, points.Count);
                 Vector4 randomPoint = points[randomIndex];
-                var position = new Vector3(randomPoint.x,randomPoint.y,randomPoint.z);
+                var position = new Vector3(randomPoint.x, randomPoint.y, randomPoint.z);
                 float opacity = randomPoint.w;
                 sphere.transform.localPosition = position;
                 SetSphereOpacity(opacity);
@@ -123,7 +123,7 @@ namespace PatientTest.Scripts
             }
             yield return eyeResults;
         }
-        
+
         private void HandleInput(int index)
         {
             eyeResults.Add(points[index]);
@@ -132,7 +132,7 @@ namespace PatientTest.Scripts
 
         private void SetSphereOpacity(float opacity)
         {
-            Color color = Color.HSVToRGB(0,0,opacity);
+            Color color = Color.HSVToRGB(0, 0, opacity);
             _sphereMaterial.SetColor(EmissionColor, color * 0.01f);
         }
 
@@ -179,7 +179,7 @@ namespace PatientTest.Scripts
         {
             foreach (Vector4 point in points)
             {
-            
+
                 var position = new Vector3(point.x, point.y, point.z);
                 GameObject prefab = Instantiate(pointPrefab, position, Quaternion.identity);
                 prefab.transform.parent = pointsFolder.transform;

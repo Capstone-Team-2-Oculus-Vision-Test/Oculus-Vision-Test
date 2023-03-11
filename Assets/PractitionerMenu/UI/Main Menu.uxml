@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/PractitionerMenu/UI/custom.uss?fileID=7433441132597879392&amp;guid=bb81f00ba01fa72428d6e8379140e8a6&amp;type=3#custom" />
+    <ui:VisualElement name="Background" style="height: 100%; flex-direction: column; position: relative; width: 100%; top: auto; left: auto; background-color: rgb(214, 214, 214);">
+        <ui:Label text="Visual Field Test" display-tooltip-when-elided="true" name="Title" style="height: 15%; -unity-text-align: upper-center; font-size: 100%; color: rgb(0, 0, 0); -unity-font-style: normal; padding-top: 2%; margin-top: 0;" />
+        <ui:VisualElement name="Settings" style="height: 65%; padding-top: 0; flex-direction: column; color: rgb(0, 0, 0);">
+            <ui:DropdownField label="Select Eye" index="-1" choices="Left, Right" name="SelectEye" style="padding-left: 10%; padding-right: 10%; height: 15%; color: rgb(0, 0, 0); font-size: 60%; align-items: flex-start; flex-direction: column;" />
+            <ui:DropdownField label="Select Test Type" index="-1" choices="20-2,30-2" name="SelectTestType" style="padding-left: 10%; padding-right: 10%; height: 15%; color: rgb(0, 0, 0); font-size: 60%; align-items: flex-start; flex-direction: column;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="SubmitField" style="flex-direction: column; align-items: stretch; justify-content: center; margin-top: 1%; height: 20%; margin-left: 20%; margin-right: 20%;">
+            <ui:Button text="Exit" display-tooltip-when-elided="true" name="ExitButton" style="font-size: 30%;" />
+            <ui:Button text="Start Test" display-tooltip-when-elided="true" name="SubmitButton" style="margin-top: 1%; font-size: 30px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
