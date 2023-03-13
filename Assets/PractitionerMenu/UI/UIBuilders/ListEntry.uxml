@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UI/ListEntry.uss?fileID=7433441132597879392&amp;guid=c58873dc25dd44bab368925e4c8fe3e8&amp;type=3#ListEntry" />
+    <ui:VisualElement name="list-entry">
+        <ui:Label text="Name, ID" display-tooltip-when-elided="true" name="name-id" />
+        <ui:Label text="01/01/23" display-tooltip-when-elided="true" name="date" />
+    </ui:VisualElement>
+</ui:UXML>

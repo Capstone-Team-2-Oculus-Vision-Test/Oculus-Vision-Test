@@ -2,27 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Utility.UtilityScripts;
 using Random = UnityEngine.Random;
 
 namespace PatientTest.Scripts
 {
     public class GridLogic : MonoBehaviour
     {
-        public enum EyeEnum
-        {
-            Left,
-            Right
-        }
-
-        public enum TestEnum
-        {
-            ThirtyDashTwo,
-            TwentyDashTwo
-        }
         public List<Vector4> eyeResults;
         public GameObject sphere;
         public GameObject pointPrefab;
         public GameObject pointsFolder;
+        public GameObject practitionerLight;
         public Camera leftEyeCamera;
         public Camera rightEyeCamera;
         public float delayTime;
@@ -70,8 +61,6 @@ namespace PatientTest.Scripts
             if (OVRInput.GetDown(OVRInput.Button.Any))
                 return;
             _pause = !_pause;
-
-            // Time.timeScale = Math.Abs(Time.timeScale - 1f) < 0f ? 0 : 1f;
         }
         public IEnumerator StartTest(EyeEnum eye, TestEnum test)
         {
@@ -101,6 +90,7 @@ namespace PatientTest.Scripts
                 var position = new Vector3(randomPoint.x, randomPoint.y, randomPoint.z);
                 float opacity = randomPoint.w;
                 sphere.transform.localPosition = position;
+                practitionerLight.transform.localPosition = position;
                 SetSphereOpacity(opacity);
                 sphere.SetActive(true);
                 yield return new WaitForSeconds(0.2f);
@@ -180,12 +170,12 @@ namespace PatientTest.Scripts
             foreach (Vector4 point in points)
             {
 
-                var position = new Vector3(point.x, point.y, point.z);
+                var position = new Vector3(point.x, point.y, point.z + 1);
                 GameObject prefab = Instantiate(pointPrefab, position, Quaternion.identity);
                 prefab.transform.parent = pointsFolder.transform;
+                prefab.layer = pointsFolder.layer;
                 prefab.transform.localPosition = position;
             }
-            pointsFolder.SetActive(false);
         }
 
     }

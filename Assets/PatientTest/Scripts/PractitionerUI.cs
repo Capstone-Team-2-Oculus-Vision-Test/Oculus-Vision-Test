@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace PatientTest.Scripts
@@ -16,9 +17,13 @@ public class PractitionerUI : MonoBehaviour
         var buttonPause = root.Q<Button>("Pause");
         var buttonRestart = root.Q<Button>("Restart");
         var buttonCancel = root.Q<Button>("Cancel");
-        
-        
-        buttonCancel.clicked += () => gridLogic.StopTest();
+
+
+        buttonCancel.clicked += () =>
+        {
+            gridLogic.StopTest();
+            SceneManager.LoadScene("PractitionerMenu");
+        };
         buttonPause.clicked += () =>
         {
             gridLogic.PauseTest();
@@ -43,7 +48,7 @@ public class PractitionerUI : MonoBehaviour
         }
         
         _progressBar.SetValueWithoutNotify(gridLogic.eyeResults.Count);
-        _progressBar.title = $"{_progressBar.value} / {_progressMax} points tested.";
+        _progressBar.title = $"{_progressBar.value} / {_progressMax} points tested";
     }
 
 }

@@ -1,0 +1,34 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/ScrollViewTest.uss?fileID=7433441132597879392&amp;guid=c9a929c75ade1fd43a06bd032deab33a&amp;type=3#ScrollViewTest" />
+    <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/ListEntry.uss?fileID=7433441132597879392&amp;guid=c58873dc25dd44bab368925e4c8fe3e8&amp;type=3#ListEntry" />
+    <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/BackButton.uss?fileID=7433441132597879392&amp;guid=cf94f838b797fee49a7c80202534a9b8&amp;type=3#BackButton" />
+    <ui:VisualElement style="height: 100%; width: 100%; align-items: stretch; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
+        <ui:VisualElement style="align-items: center; justify-content: space-around; height: 100%;">
+            <ui:Label text="Patients" display-tooltip-when-elided="true" style="font-size: 70px;" />
+            <ui:ScrollView name="itemContainer" />
+            <ui:VisualElement name="list-entry">
+                <ui:Label text="John Smith, 123456789" display-tooltip-when-elided="true" name="name-id" />
+                <ui:Label text="01/01/23" display-tooltip-when-elided="true" name="date" />
+            </ui:VisualElement>
+            <ui:VisualElement name="list-entry">
+                <ui:Label text="Jane Doe, 987654321" display-tooltip-when-elided="true" name="name-id" />
+                <ui:Label text="01/01/23" display-tooltip-when-elided="true" name="date" />
+            </ui:VisualElement>
+            <ui:VisualElement name="list-entry">
+                <ui:Label text="David Johnson, 456789123" display-tooltip-when-elided="true" name="name-id" />
+                <ui:Label text="01/01/23" display-tooltip-when-elided="true" name="date" />
+            </ui:VisualElement>
+            <ui:VisualElement name="list-entry">
+                <ui:Label text="Sarah Lee, 789123456" display-tooltip-when-elided="true" name="name-id" />
+                <ui:Label text="01/01/23" display-tooltip-when-elided="true" name="date" />
+            </ui:VisualElement>
+            <ui:VisualElement name="list-entry">
+                <ui:Label text="Robert Chen, 321654987" display-tooltip-when-elided="true" name="name-id" />
+                <ui:Label text="01/01/23" display-tooltip-when-elided="true" name="date" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement style="align-items: flex-start;">
+            <ui:Button text="Back" display-tooltip-when-elided="true" name="BackButton" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

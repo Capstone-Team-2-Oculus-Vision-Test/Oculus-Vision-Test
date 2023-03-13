@@ -1,0 +1,15 @@
+.button {
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 20%;
+    height: 10%;
+    font-size: 135%;
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    background-color: rgb(180, 162, 86);
+    color: rgb(0, 0, 0);
+}
