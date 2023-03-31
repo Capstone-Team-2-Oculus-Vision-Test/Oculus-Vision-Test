@@ -18,9 +18,9 @@ namespace PractitionerMenu.Scripts
         private VisualElement _startMenuView;
         private VisualElement _newTestView;
         private VisualElement _previousResultsView;
-        
 
-        
+
+
         private void OnEnable()
         {
             _doc = GetComponent<UIDocument>();
@@ -76,6 +76,8 @@ namespace PractitionerMenu.Scripts
 
         private void NewTestStartButton()
         {
+            storePatientInfo();
+
             var dropdownEye = _newTestView.Q<DropdownField>("SelectEye");
             switch (dropdownEye.value)
             {
@@ -86,7 +88,7 @@ namespace PractitionerMenu.Scripts
                     PlayerPrefs.SetInt("Eye", (int)EyeEnum.Right);
                     break;
             }
-            
+
             var dropdownTestType = _newTestView.Q<DropdownField>("SelectTestType");
             switch (dropdownTestType.value)
             {
@@ -100,12 +102,21 @@ namespace PractitionerMenu.Scripts
             SceneManager.LoadScene("PatientTestScene");
         }
 
+        private void storePatientInfo()
+        {
+            var patientInfo = PatientTest.Scripts.DataTransfer.patientDTO;
+            patientInfo.name = _newTestView.Q<TextField>("Name").value;
+            patientInfo.age = _newTestView.Q<TextField>("Age").value;
+            patientInfo.sex = _newTestView.Q<TextField>("Sex").value;
+            patientInfo.id = _newTestView.Q<TextField>("ID").value;
+        }
+
         private void NewTestBackButton()
         {
             _background.Clear();
             _background.Add(_startMenuView);
         }
 
-        
+
     }
 }

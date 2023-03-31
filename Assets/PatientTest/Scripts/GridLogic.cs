@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,7 +63,12 @@ namespace PatientTest.Scripts
         }
         public IEnumerator StartTest(EyeEnum eye, TestEnum test)
         {
+            var results = DataTransfer.resultsDTO;
 
+            results.stimulusSize = pointPrefab.transform.localScale[0];
+            results.stimulusColor = pointPrefab.GetComponent<Renderer>().sharedMaterial.color;
+
+            results.eyeTested = eye.ToString();
             if (eye == EyeEnum.Right)
             {
                 leftEyeCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("Default"));
@@ -81,6 +85,8 @@ namespace PatientTest.Scripts
             eyeResults = new List<Vector4>();
             CreateGridCoordinates(eye, test);
             CreateVisualGrid();
+
+            results.startTime = System.DateTime.Now;
             while (points.Count > 0)
             {
                 yield return new WaitUntil(() => !_pause);
@@ -111,7 +117,12 @@ namespace PatientTest.Scripts
                 randomPoint.w += 10f;
                 points[randomIndex] = randomPoint;
             }
-            yield return eyeResults;
+            results.endTime = System.DateTime.Now;
+
+            results.duration = results.endTime.Subtract(results.startTime).Seconds;
+
+            results.data = eyeResults;
+            results.numPoints = eyeResults.Count;
         }
 
         private void HandleInput(int index)
