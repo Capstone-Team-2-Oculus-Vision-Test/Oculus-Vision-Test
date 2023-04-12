@@ -6956,7 +6956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c35d3dd842e6354cb6523178df0fa72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enablePicture: 0
+  enablePicture: 1
   fileName: screenshot.png
 --- !u!1 &1297166806
 GameObject:
@@ -11007,3 +11007,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f23df6456e50344b5f8df92b92f800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 1275917846}

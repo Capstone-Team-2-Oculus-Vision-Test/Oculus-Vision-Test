@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:GroupBox name="ResultInfo" style="flex-direction: row;">
+        <ui:Label text="Label" display-tooltip-when-elided="false" name="Label" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 30px; -unity-text-align: middle-left;" />
+        <ui:Label text=":" display-tooltip-when-elided="false" name="Seperator" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 30px; -unity-text-align: middle-left;" />
+        <ui:Label text="Label" display-tooltip-when-elided="false" name="Text" style="color: rgb(255, 255, 255); font-size: 20px; -unity-text-align: middle-left;" />
+    </ui:GroupBox>
+</ui:UXML>

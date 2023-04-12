@@ -1,5 +1,4 @@
 .unity-base-field {
-    width: auto;
     font-size: 26px;
 }
 
@@ -11,14 +10,23 @@
 }
 
 .unity-label {
-    color: rgba(255, 255, 255, 255);
+    color: rgb(255, 255, 255);
     font-size: 33px;
 }
 
 .unity-base-text-field__input {
-    background-color: rgba(188, 188, 188, 255);
+    background-color: rgb(188, 188, 188);
 }
 
 .unity-base-popup-field {
-    width: 50%;
+    width: 100%;
+    flex-direction: column;
+}
+
+.inputBox {
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 10%;
 }

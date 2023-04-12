@@ -23,5 +23,5 @@
 }
 
 .unity-progress-bar__background {
-    background-color: rgba(60, 58, 58, 255);
+    background-color: rgb(60, 58, 58);
 }
