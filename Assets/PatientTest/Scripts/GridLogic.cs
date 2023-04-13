@@ -16,8 +16,15 @@ namespace PatientTest.Scripts
         public GameObject practitionerLight;
         public Camera leftEyeCamera;
         public Camera rightEyeCamera;
-        public float delayTime;
+        public float minInputDelay;
+        public float maxInputDelay;
+        public float minNextDelay;
+        public float maxNextDelay;
+        public float sphereDelay;
         public float brightness;
+        public float pointFOV;
+        public float pointDistance;
+        public float maxBrightness;
         private Material _sphereMaterial;
         private IEnumerator _testCoroutine;
         private bool _pause;
@@ -32,6 +39,8 @@ namespace PatientTest.Scripts
         private void Start()
         {
             _renderer = sphere.GetComponent<Renderer>();
+            sphere.transform.localScale = new Vector3(pointFOV / 1.2f, pointFOV / 1.2f, pointFOV / 1.2f);
+            practitionerLight.transform.localScale = new Vector3(pointFOV / 1.2f, pointFOV / 1.2f, pointFOV / 1.2f);
             _testCoroutine = StartTest((EyeEnum)PlayerPrefs.GetInt("Eye"), (TestEnum)PlayerPrefs.GetInt("TestType"));
             StartCoroutine(_testCoroutine);
         }
@@ -86,6 +95,7 @@ namespace PatientTest.Scripts
                 yield return new WaitUntil(() => !_pause);
                 var responded = false;
                 int randomIndex = Random.Range(0, points.Count);
+                float delayTime = Random.Range(minInputDelay, maxInputDelay);
                 Vector4 randomPoint = points[randomIndex];
                 var position = new Vector3(randomPoint.x, randomPoint.y, randomPoint.z);
                 float opacity = randomPoint.w;
@@ -93,10 +103,10 @@ namespace PatientTest.Scripts
                 practitionerLight.transform.localPosition = position;
                 SetSphereOpacity(opacity);
                 sphere.SetActive(true);
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(sphereDelay); //I think this needs to be a seperate coroutine as it prohibits grabbing input while sphere is active
                 sphere.SetActive(false);
                 var time = 0f;
-                while (time < delayTime)
+                while (time < delayTime) //currently delay in between light flashes is = to time given to input (I think these should be seperate)?
                 {
                     if (OVRInput.GetDown(OVRInput.Button.One))
                     {
@@ -109,7 +119,10 @@ namespace PatientTest.Scripts
 
                 if (responded) continue;
                 randomPoint.w += 10f;
-                points[randomIndex] = randomPoint;
+                if (randomPoint.w < maxBrightness)
+                {
+                    points[randomIndex] = randomPoint;
+                }
             }
             yield return eyeResults;
         }
@@ -128,22 +141,44 @@ namespace PatientTest.Scripts
 
         private void CreateGridCoordinates(EyeEnum eye, TestEnum test)
         {
-            const int maxHorizontal = 27;
-            int maxVertical = (test == TestEnum.TwentyDashTwo ? 21 : 27);
+            float scalingFactor = pointDistance / (7.2f);
+            const float safetyPad = 0.0001f;
+            float maxHorizontal = 27 * scalingFactor;
+            float maxVertical = (test == TestEnum.TwentyDashTwo ? 21 * scalingFactor : 27 * scalingFactor);
 
-            for (var xAxis = 3; xAxis <= maxHorizontal; xAxis += 6)
+            for (var xAxis = 3 * scalingFactor; xAxis <= maxHorizontal + safetyPad; xAxis += 6 * scalingFactor)
             {
-                if (xAxis > 9)
+
+                if (xAxis > 9 * scalingFactor)
                 {
-                    maxVertical -= 6;
+                    maxVertical -= 6 * scalingFactor;
                 }
 
-                for (var yAxis = 3; yAxis <= maxVertical; yAxis += 6)
+                for (var yAxis = 3 * scalingFactor; yAxis <= maxVertical + safetyPad; yAxis += 6 * scalingFactor)
                 {
                     var quadrantOne = new Vector4(xAxis, yAxis, 10, brightness);
                     var quadrantTwo = new Vector4(-xAxis, yAxis, 10, brightness);
                     var quadrantThree = new Vector4(-xAxis, -yAxis, 10, brightness);
                     var quadrantFour = new Vector4(xAxis, -yAxis, 10, brightness);
+
+                    if ((xAxis <= maxHorizontal + safetyPad && xAxis >= maxHorizontal - safetyPad) && (yAxis <= 3 * scalingFactor + safetyPad && yAxis >= 3 * scalingFactor - safetyPad) && eye == EyeEnum.Right && test == TestEnum.TwentyDashTwo)
+                    {
+                        points.Add(quadrantTwo);
+                        points.Add(quadrantThree);
+                    }
+                    else if ((xAxis <= maxHorizontal + safetyPad && xAxis >= maxHorizontal - safetyPad) && (yAxis <= 3 * scalingFactor + safetyPad && yAxis >= 3 * scalingFactor - safetyPad) && eye == EyeEnum.Left && test == TestEnum.TwentyDashTwo)
+                    {
+                        points.Add(quadrantOne);
+                        points.Add(quadrantFour);
+                    }
+                    else
+                    {
+                        points.Add(quadrantOne);
+                        points.Add(quadrantTwo);
+                        points.Add(quadrantThree);
+                        points.Add(quadrantFour);
+                    }
+                    /* CHANGED TO IF/ELSE so I can use non-constants for the cases
                     switch (xAxis)
                     {
                         case 27 when yAxis == 3 && eye == EyeEnum.Right && test == TestEnum.TwentyDashTwo:
@@ -161,6 +196,7 @@ namespace PatientTest.Scripts
                             points.Add(quadrantFour);
                             break;
                     }
+                    */
                 }
             }
         }
@@ -169,9 +205,9 @@ namespace PatientTest.Scripts
         {
             foreach (Vector4 point in points)
             {
-
                 var position = new Vector3(point.x, point.y, point.z + 1);
                 GameObject prefab = Instantiate(pointPrefab, position, Quaternion.identity);
+                prefab.transform.localScale = new Vector3(pointFOV / 1.2f, pointFOV / 1.2f, pointFOV / 1.2f);
                 prefab.transform.parent = pointsFolder.transform;
                 prefab.layer = pointsFolder.layer;
                 prefab.transform.localPosition = position;
