@@ -8,7 +8,8 @@ public class PractitionerUI : MonoBehaviour
 {
     public GridLogic gridLogic;
     private ProgressBar _progressBar;
-    private int _progressMax = 0;
+    private int _progressMax;
+    private const bool Debug = true;
 
     private void OnEnable()
     {
@@ -17,7 +18,8 @@ public class PractitionerUI : MonoBehaviour
         var buttonPause = root.Q<Button>("Pause");
         var buttonRestart = root.Q<Button>("Restart");
         var buttonCancel = root.Q<Button>("Cancel");
-
+        var buttonDebug = root.Q<Button>("DebugResults");
+        
 
         buttonCancel.clicked += () =>
         {
@@ -31,8 +33,21 @@ public class PractitionerUI : MonoBehaviour
         };
         buttonRestart.clicked += () =>
         {
+            buttonPause.text = buttonPause.text == "Resume" ? "Pause" : "Resume";
             gridLogic.ResetTest();
         };
+        if (Debug)
+        {
+            buttonDebug.clicked += () =>
+            {
+                gridLogic.PauseTest();
+                gridLogic.DebugResults();
+            };
+        }
+        else
+        {
+            buttonDebug.visible = false;
+        }
     }
 
     private void Start()

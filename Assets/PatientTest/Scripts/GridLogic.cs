@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PractitionerMenu.Scripts;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static Utility.UtilityScripts;
+using static PatientTest.Scripts.DataTransfer;
 using Random = UnityEngine.Random;
 
 namespace PatientTest.Scripts
@@ -41,7 +44,8 @@ namespace PatientTest.Scripts
             _renderer = sphere.GetComponent<Renderer>();
             sphere.transform.localScale = new Vector3(pointFOV / 1.2f, pointFOV / 1.2f, pointFOV / 1.2f);
             practitionerLight.transform.localScale = new Vector3(pointFOV / 1.2f, pointFOV / 1.2f, pointFOV / 1.2f);
-            _testCoroutine = StartTest((EyeEnum)PlayerPrefs.GetInt("Eye"), (TestEnum)PlayerPrefs.GetInt("TestType"));
+            //_testCoroutine = StartTest((EyeEnum)PlayerPrefs.GetInt("Eye"), (TestEnum)PlayerPrefs.GetInt("TestType"));
+            _testCoroutine = StartTest(resultsDTO.EyeTested, resultsDTO.Test);
             StartCoroutine(_testCoroutine);
         }
 
@@ -71,9 +75,28 @@ namespace PatientTest.Scripts
                 return;
             _pause = !_pause;
         }
+
+        public void DebugResults()
+        {
+            
+            foreach (Vector4 item in points)
+            {
+                Vector4 point = item;
+                point.w = Random.Range(1, 11) * 10;
+                point.w /= 2;
+                eyeResults.Add(point);
+            }
+            resultsDTO.Data = eyeResults;
+            MainMenu.SetShowResults(true);
+            SceneManager.LoadScene("PractitionerMenu");
+        }
         public IEnumerator StartTest(EyeEnum eye, TestEnum test)
         {
+            TestResultsDTO results = resultsDTO;
 
+            results.StimulusSize = pointPrefab.transform.localScale[0];
+            results.StimulusColor = pointPrefab.GetComponent<Renderer>().sharedMaterial.color;
+            
             if (eye == EyeEnum.Right)
             {
                 leftEyeCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("Default"));
@@ -90,6 +113,8 @@ namespace PatientTest.Scripts
             eyeResults = new List<Vector4>();
             CreateGridCoordinates(eye, test);
             CreateVisualGrid();
+
+            results.StartTime = DateTime.Now;
             while (points.Count > 0)
             {
                 yield return new WaitUntil(() => !_pause);
@@ -124,12 +149,20 @@ namespace PatientTest.Scripts
                     points[randomIndex] = randomPoint;
                 }
             }
-            yield return eyeResults;
+            results.EndTime = DateTime.Now;
+
+            results.Duration = results.EndTime.Subtract(results.StartTime).Seconds;
+
+            results.Data = eyeResults;
+            results.NumPoints = eyeResults.Count;
+            SceneManager.LoadScene("PractitionerMenu");
         }
 
         private void HandleInput(int index)
         {
-            eyeResults.Add(points[index]);
+            Vector4 point = points[index];
+            point.w /= 2;
+            eyeResults.Add(point);
             points.RemoveAt(index);
         }
 
