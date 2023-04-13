@@ -31,6 +31,9 @@ namespace PatientTest.Scripts
         private Material _sphereMaterial;
         private IEnumerator _testCoroutine;
         private bool _pause;
+        private bool _allowInput;
+        private bool _responded;
+        private int _randomIndex;
         private (EyeEnum eye, TestEnum test) _testParameters;
 
         public List<Vector4> points = new();
@@ -47,6 +50,15 @@ namespace PatientTest.Scripts
             //_testCoroutine = StartTest((EyeEnum)PlayerPrefs.GetInt("Eye"), (TestEnum)PlayerPrefs.GetInt("TestType"));
             _testCoroutine = StartTest(resultsDTO.EyeTested, resultsDTO.Test);
             StartCoroutine(_testCoroutine);
+        }
+
+        private void FixedUpdate()
+        {
+            if (OVRInput.GetDown(OVRInput.Button.One) && _allowInput)
+            {
+                HandleInput(_randomIndex);
+                _responded = true;
+            }
         }
 
         public void StopTest()
@@ -78,7 +90,8 @@ namespace PatientTest.Scripts
 
         public void DebugResults()
         {
-            
+            if (OVRInput.GetDown(OVRInput.Button.Any))
+                return;
             foreach (Vector4 item in points)
             {
                 Vector4 point = item;
@@ -117,36 +130,32 @@ namespace PatientTest.Scripts
             results.StartTime = DateTime.Now;
             while (points.Count > 0)
             {
+                _responded = false;
                 yield return new WaitUntil(() => !_pause);
-                var responded = false;
-                int randomIndex = Random.Range(0, points.Count);
+                _randomIndex = Random.Range(0, points.Count);
                 float delayTime = Random.Range(minInputDelay, maxInputDelay);
-                Vector4 randomPoint = points[randomIndex];
+                Vector4 randomPoint = points[_randomIndex];
                 var position = new Vector3(randomPoint.x, randomPoint.y, randomPoint.z);
                 float opacity = randomPoint.w;
                 sphere.transform.localPosition = position;
                 practitionerLight.transform.localPosition = position;
                 SetSphereOpacity(opacity);
                 sphere.SetActive(true);
+                _allowInput = true;
                 yield return new WaitForSeconds(sphereDelay); //I think this needs to be a seperate coroutine as it prohibits grabbing input while sphere is active
                 sphere.SetActive(false);
-                var time = 0f;
-                while (time < delayTime) //currently delay in between light flashes is = to time given to input (I think these should be seperate)?
-                {
-                    if (OVRInput.GetDown(OVRInput.Button.One))
-                    {
-                        HandleInput(randomIndex);
-                        responded = true;
-                    }
-                    time += Time.deltaTime;
-                    yield return null;
-                }
-
-                if (responded) continue;
+                yield return new WaitForSeconds(delayTime);
+                _allowInput = false;
+                if (_responded) continue;
                 randomPoint.w += 10f;
-                if (randomPoint.w < maxBrightness)
+                if (randomPoint.w <= maxBrightness)
                 {
-                    points[randomIndex] = randomPoint;
+                    points[_randomIndex] = randomPoint;
+                }
+                else
+                {
+                    HandleInput(_randomIndex);
+                    
                 }
             }
             results.EndTime = DateTime.Now;

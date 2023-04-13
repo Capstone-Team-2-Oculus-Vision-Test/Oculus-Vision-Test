@@ -29,6 +29,7 @@
             </ui:VisualElement>
             <ui:VisualElement name="ButtonsView" style="flex-direction: row; justify-content: space-between;">
                 <ui:Button text="Back" display-tooltip-when-elided="true" name="BackButton" />
+                <ui:Button text="Save Test" display-tooltip-when-elided="true" name="SaveTestButton" />
                 <ui:Button text="Save PDF" display-tooltip-when-elided="true" name="SavePDFButton" />
             </ui:VisualElement>
         </ui:VisualElement>

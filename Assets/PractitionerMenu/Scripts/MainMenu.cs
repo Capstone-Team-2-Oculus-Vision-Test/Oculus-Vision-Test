@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using static Utility.UtilityScripts;
 using System;
+using Utility;
 using static PatientTest.Scripts.DataTransfer;
 
 namespace PractitionerMenu.Scripts
@@ -42,6 +43,8 @@ namespace PractitionerMenu.Scripts
                 _resultView.StretchToParentSize();
                 var resultsBackButton = _resultView.Q<Button>("BackButton");
                 var savePdfButton = _resultView.Q<Button>("SavePDFButton");
+                var saveResultsButton = _resultView.Q<Button>("SaveTestButton");
+                saveResultsButton.clicked += SaveResultsToDB;
                 resultsBackButton.clicked += GoToMainMenu;
                 savePdfButton.clicked += SavePdf;
                 SetResultValues();
@@ -79,6 +82,12 @@ namespace PractitionerMenu.Scripts
             }
         }
 
+        private void SaveResultsToDB()
+        {
+            var dbConnection = new Sqlite();
+            dbConnection.InsertTestResults(resultsDTO);
+        }
+
         private void SavePdf()
         {
             throw new NotImplementedException();
@@ -86,23 +95,23 @@ namespace PractitionerMenu.Scripts
 
         private void SetResultValues()
         {
-            foreach (Vector4 point in resultsDTO.Data)
+            foreach (var point in resultsDTO.Data)
             {
                 var position = new Vector3(point.x, point.y, point.z);
-                TextMeshPro text = Instantiate(textPrefab, resultCamera.transform);
+                var text = Instantiate(textPrefab, resultCamera.transform);
                 text.transform.localPosition = position;
                 text.text = point.w.ToString(CultureInfo.InvariantCulture);
             }
             _resultView.Q<TemplateContainer>("Name").Q<Label>("Text").text = patientDTO.FirstName + " " + patientDTO.LastName;
-            _resultView.Q<TemplateContainer>("Age").Q<Label>("Text").text = patientDTO.Age.ToString();
+            _resultView.Q<TemplateContainer>("Age").Q<Label>("Text").text = patientDTO.Age;
             _resultView.Q<TemplateContainer>("Sex").Q<Label>("Text").text = patientDTO.Sex;
-            _resultView.Q<TemplateContainer>("Id").Q<Label>("Text").text = patientDTO.ID.ToString();
+            _resultView.Q<TemplateContainer>("Id").Q<Label>("Text").text = patientDTO.ID;
             var testField = _resultView.Q<TemplateContainer>("Test").Q<Label>("Text");
             testField.text = resultsDTO.Test switch
             {
                 TestEnum.ThirtyDashTwo => "30-2",
                 TestEnum.TwentyDashTwo => "20-2",
-                var _ => testField.text
+                _ => testField.text
             };
             _resultView.Q<TemplateContainer>("Eye").Q<Label>("Text").text = resultsDTO.EyeTested.ToString();
         }
@@ -139,7 +148,7 @@ namespace PractitionerMenu.Scripts
             {
                 "Left" => EyeEnum.Left,
                 "Right" => EyeEnum.Right,
-                var _ => resultsDTO.EyeTested
+                _ => resultsDTO.EyeTested
 
             };
 
@@ -148,7 +157,7 @@ namespace PractitionerMenu.Scripts
             {
                 "20-2" => TestEnum.TwentyDashTwo,
                 "30-2" => TestEnum.ThirtyDashTwo,
-                var _ => resultsDTO.Test
+                _ => resultsDTO.Test
             };
             // var firstName = _newTestView.Q<TextField>("FirstName");
             // var lastName = _newTestView.Q<TextField>("LastName");
@@ -172,11 +181,15 @@ namespace PractitionerMenu.Scripts
         }
         private void StorePatientInfo()
         {
+            // Store patient info into static current patient
             patientDTO.FirstName = _newTestView.Q<TextField>("FirstName").value; 
             patientDTO.LastName = _newTestView.Q<TextField>("LastName").value;
             patientDTO.Age = _newTestView.Q<TextField>("Age").value;
             patientDTO.Sex = _newTestView.Q<TextField>("Sex").value;
             patientDTO.ID = _newTestView.Q<TextField>("ID").value;
+            // Store patient info into database
+            var database = new Sqlite();
+            database.InsertPatient(patientDTO.ID, patientDTO.FirstName,patientDTO.LastName,patientDTO.Age,patientDTO.Sex);
         }
     }
 }
