@@ -1363,6 +1363,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9084144747343415146, guid: ce2fa19f87d45f548add8331b94b1281, type: 3}
     - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
+      propertyPath: sphereDelay
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
       propertyPath: uiReference
       value: 
       objectReference: {fileID: 1594238325}
@@ -1374,6 +1378,18 @@ PrefabInstance:
       propertyPath: leftEyeCamera
       value: 
       objectReference: {fileID: 1678969705}
+    - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
+      propertyPath: maxBrightness
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
+      propertyPath: maxInputDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
+      propertyPath: minInputDelay
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
       propertyPath: pointDistance
       value: 7.2
