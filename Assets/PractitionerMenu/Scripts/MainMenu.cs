@@ -84,8 +84,9 @@ namespace PractitionerMenu.Scripts
 
         private void SaveResultsToDB()
         {
-            var dbConnection = new Sqlite();
-            dbConnection.InsertTestResults(resultsDTO);
+            return;
+            //var dbConnection = new Sqlite();
+            //dbConnection.InsertTestResults(resultsDTO);
         }
 
         private void SavePdf()
@@ -97,7 +98,7 @@ namespace PractitionerMenu.Scripts
         {
             foreach (var point in resultsDTO.Data)
             {
-                var position = new Vector3(point.x, point.y, point.z);
+                var position = new Vector3(point.x / resultsDTO.ScalingFactor, point.y / resultsDTO.ScalingFactor, point.z);
                 var text = Instantiate(textPrefab, resultCamera.transform);
                 text.transform.localPosition = position;
                 text.text = point.w.ToString(CultureInfo.InvariantCulture);
@@ -188,8 +189,9 @@ namespace PractitionerMenu.Scripts
             patientDTO.Sex = _newTestView.Q<TextField>("Sex").value;
             patientDTO.ID = _newTestView.Q<TextField>("ID").value;
             // Store patient info into database
-            var database = new Sqlite();
-            database.InsertPatient(patientDTO.ID, patientDTO.FirstName,patientDTO.LastName,patientDTO.Age,patientDTO.Sex);
+            // var database = new Sqlite();
+            // database.InsertPatient(patientDTO.ID, patientDTO.FirstName,patientDTO.LastName,patientDTO.Age,patientDTO.Sex);
         }
+       
     }
 }

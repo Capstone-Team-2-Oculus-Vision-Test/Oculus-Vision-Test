@@ -36,6 +36,7 @@ namespace PatientTest.Scripts
         private int _randomIndex;
         private (EyeEnum eye, TestEnum test) _testParameters;
 
+
         public List<Vector4> points = new();
 
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
@@ -164,6 +165,7 @@ namespace PatientTest.Scripts
 
             results.Data = eyeResults;
             results.NumPoints = eyeResults.Count;
+            MainMenu.SetShowResults(true);
             SceneManager.LoadScene("PractitionerMenu");
         }
 
@@ -184,6 +186,7 @@ namespace PatientTest.Scripts
         private void CreateGridCoordinates(EyeEnum eye, TestEnum test)
         {
             float scalingFactor = pointDistance / (7.2f);
+            resultsDTO.ScalingFactor = scalingFactor;
             const float safetyPad = 0.0001f;
             float maxHorizontal = 27 * scalingFactor;
             float maxVertical = (test == TestEnum.TwentyDashTwo ? 21 * scalingFactor : 27 * scalingFactor);

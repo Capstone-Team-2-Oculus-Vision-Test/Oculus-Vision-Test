@@ -23,6 +23,7 @@ namespace PatientTest.Scripts
         public Color StimulusColor;
         public int NumPoints;
         public float ErrorRate;
+        public float ScalingFactor;
     }
 
     public class PatientDTO
