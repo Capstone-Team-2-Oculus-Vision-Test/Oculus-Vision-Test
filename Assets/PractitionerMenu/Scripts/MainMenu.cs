@@ -44,7 +44,12 @@ namespace PractitionerMenu.Scripts
                 var resultsBackButton = _resultView.Q<Button>("BackButton");
                 var savePdfButton = _resultView.Q<Button>("SavePDFButton");
                 var saveResultsButton = _resultView.Q<Button>("SaveTestButton");
-                saveResultsButton.clicked += SaveResultsToDB;
+                saveResultsButton.clicked += () =>
+                {
+                    SaveResultsToDB();
+                    saveResultsButton.text = "Results Saved";
+                    saveResultsButton.SetEnabled(false);
+                };
                 resultsBackButton.clicked += GoToMainMenu;
                 savePdfButton.clicked += SavePdf;
                 SetResultValues();
@@ -84,9 +89,9 @@ namespace PractitionerMenu.Scripts
 
         private void SaveResultsToDB()
         {
-            return;
-            //var dbConnection = new Sqlite();
-            //dbConnection.InsertTestResults(resultsDTO);
+            var dbConnection = new Sqlite();
+            dbConnection.InsertTestResults(resultsDTO);
+            
         }
 
         private void SavePdf()
@@ -160,19 +165,6 @@ namespace PractitionerMenu.Scripts
                 "30-2" => TestEnum.ThirtyDashTwo,
                 _ => resultsDTO.Test
             };
-            // var firstName = _newTestView.Q<TextField>("FirstName");
-            // var lastName = _newTestView.Q<TextField>("LastName");
-            // var age = _newTestView.Q<TextField>("Age");
-            // var sex = _newTestView.Q<TextField>("Sex");
-            // var id = _newTestView.Q<TextField>("ID");
-            // SelectedPatient = new PatientInfo
-            // {
-            //     FirstName = firstName.value,
-            //     LastName = lastName.value,
-            //     Age = Int32.Parse(age.value),
-            //     Sex = sex.value,
-            //     Id = Int32.Parse(id.value)
-            // };
             SceneManager.LoadScene("PatientTestScene");
         }
 
@@ -189,8 +181,8 @@ namespace PractitionerMenu.Scripts
             patientDTO.Sex = _newTestView.Q<TextField>("Sex").value;
             patientDTO.ID = _newTestView.Q<TextField>("ID").value;
             // Store patient info into database
-            // var database = new Sqlite();
-            // database.InsertPatient(patientDTO.ID, patientDTO.FirstName,patientDTO.LastName,patientDTO.Age,patientDTO.Sex);
+            var database = new Sqlite();
+            database.InsertPatient(patientDTO.ID, patientDTO.FirstName,patientDTO.LastName,patientDTO.Age,patientDTO.Sex);
         }
        
     }

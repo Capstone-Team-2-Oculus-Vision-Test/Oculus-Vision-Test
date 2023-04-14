@@ -122,7 +122,7 @@ namespace PatientTest.Scripts
             }
 
             _testParameters = (eye, test);
-            _pause = false;
+            _pause = true;
             _sphereMaterial = _renderer.material;
             eyeResults = new List<Vector4>();
             CreateGridCoordinates(eye, test);

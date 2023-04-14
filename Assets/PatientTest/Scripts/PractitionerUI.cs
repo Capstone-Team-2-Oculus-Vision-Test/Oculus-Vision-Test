@@ -19,8 +19,9 @@ public class PractitionerUI : MonoBehaviour
         var buttonRestart = root.Q<Button>("Restart");
         var buttonCancel = root.Q<Button>("Cancel");
         var buttonDebug = root.Q<Button>("DebugResults");
-        
 
+        buttonPause.text = "Begin";
+        
         buttonCancel.clicked += () =>
         {
             gridLogic.StopTest();
@@ -29,7 +30,12 @@ public class PractitionerUI : MonoBehaviour
         buttonPause.clicked += () =>
         {
             gridLogic.PauseTest();
-            buttonPause.text = buttonPause.text == "Resume" ? "Pause" : "Resume";
+            if (buttonPause.text == "Begin")
+            {
+                buttonPause.text = "Pause";
+            }
+            else
+                buttonPause.text = buttonPause.text == "Resume" ? "Pause" : "Resume";
         };
         buttonRestart.clicked += () =>
         {
@@ -60,6 +66,7 @@ public class PractitionerUI : MonoBehaviour
         if (_progressMax == 0)
         {
             _progressMax = gridLogic.points.Count;
+            _progressBar.highValue = _progressMax;
         }
         
         _progressBar.SetValueWithoutNotify(gridLogic.eyeResults.Count);
