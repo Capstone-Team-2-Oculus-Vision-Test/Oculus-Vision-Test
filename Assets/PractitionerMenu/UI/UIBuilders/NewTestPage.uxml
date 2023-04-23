@@ -2,22 +2,29 @@
     <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/NewTest.uss?fileID=7433441132597879392&amp;guid=abe541b846cf41a4fa463266da1fe5b7&amp;type=3#NewTest" />
     <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/BackButton.uss?fileID=7433441132597879392&amp;guid=cf94f838b797fee49a7c80202534a9b8&amp;type=3#BackButton" />
     <ui:VisualElement name="Container" style="width: 100%; height: 100%; flex-direction: column; background-color: rgb(48, 48, 48); align-items: stretch; flex-wrap: nowrap; flex-grow: 1; justify-content: space-between;">
-        <ui:VisualElement name="VariableContainer" style="flex-direction: row; justify-content: space-around; flex-wrap: wrap; align-items: flex-start;">
-            <ui:VisualElement name="PatientInfo" style="flex-wrap: wrap; flex-direction: column;">
-                <ui:TextField picking-mode="Ignore" label="First Name" text="John" name="FirstName" value="John" style="align-items: stretch;" />
-                <ui:TextField picking-mode="Ignore" label="Last Name" text="Smith" name="LastName" value="Smith" style="align-items: stretch;" />
-                <ui:TextField picking-mode="Ignore" label="Age" text="45" name="Age" value="45" />
-                <ui:TextField picking-mode="Ignore" label="Sex" text="Male" name="Sex" value="Male" />
-                <ui:TextField picking-mode="Ignore" label="Patient ID" text="123456789" name="ID" value="123456789" style="align-items: stretch;" />
+        <ui:VisualElement name="VariableContainer" style="flex-direction: row; justify-content: flex-start; flex-wrap: wrap; align-items: flex-start; flex-grow: 1;">
+            <ui:VisualElement name="patients" style="background-color: rgb(77, 77, 77); border-left-width: 4px; border-right-width: 4px; border-top-width: 4px; border-bottom-width: 4px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); height: 550px;">
+                <ui:Label text="Patients" display-tooltip-when-elided="true" picking-mode="Ignore" style="-unity-font-style: bold; -unity-text-align: upper-center; background-color: rgb(48, 48, 48); visibility: visible;" />
+                <ui:ListView focusable="true" name="patientList" fixed-item-height="40" show-add-remove-footer="false" show-border="true" style="width: 300px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 2px;" />
             </ui:VisualElement>
-            <ui:VisualElement name="TestInfo">
-                <ui:DropdownField label="Eye" index="0" choices="Left, Right" name="SelectEye" class="unity-base-field" />
-                <ui:DropdownField label="Test" index="0" name="SelectTestType" choices="20-2, 30-2" class="unity-base-field" />
+            <ui:VisualElement style="flex-direction: row; justify-content: space-around; flex-grow: 1;">
+                <ui:VisualElement name="PatientInfo" style="flex-wrap: wrap; flex-direction: column;">
+                    <ui:TextField picking-mode="Ignore" label="First Name" name="FirstName" style="align-items: stretch;" />
+                    <ui:TextField picking-mode="Ignore" label="Last Name" name="LastName" style="align-items: stretch;" />
+                    <ui:TextField picking-mode="Ignore" label="Age" name="Age" />
+                    <ui:TextField picking-mode="Ignore" label="Sex" name="Sex" />
+                    <ui:TextField picking-mode="Ignore" label="Patient ID" name="ID" style="align-items: stretch;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="TestInfo">
+                    <ui:DropdownField label="Eye" index="0" choices="Left, Right" name="SelectEye" class="unity-base-field" />
+                    <ui:DropdownField label="Test" index="0" name="SelectTestType" choices="20-2, 30-2" class="unity-base-field" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="Buttons" style="flex-direction: row; justify-content: space-between;">
             <ui:Button text="Back" display-tooltip-when-elided="true" name="BackButton" style="background-color: rgb(180, 162, 86); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);" />
-            <ui:Button text="Start Test" display-tooltip-when-elided="true" name="StartButton" style="font-size: 31px; color: rgb(0, 0, 0); background-color: rgb(180, 162, 86); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; width: 20%;" />
+            <ui:Button text="Save Patient" display-tooltip-when-elided="true" name="SavePatient" />
+            <ui:Button text="Start Test" display-tooltip-when-elided="true" name="StartButton" style="font-size: 31px; color: rgb(0, 0, 0); background-color: rgb(180, 162, 86); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

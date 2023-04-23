@@ -5,8 +5,8 @@
         <ui:VisualElement name="ButtonContainer" style="width: 60%; justify-content: space-around; align-items: center; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0);">
             <ui:Button text="Cancel" display-tooltip-when-elided="true" name="Cancel" focusable="false" class="button" style="font-size: 40px;" />
             <ui:Button text="Restart" display-tooltip-when-elided="true" name="Restart" focusable="false" class="button" style="font-size: 40px;" />
-            <ui:Button text="Pause" name="Pause" focusable="false" class="button" style="font-size: 40px;" />
-            <ui:Button text="Debug Results" display-tooltip-when-elided="true" name="DebugResults" class="button" style="white-space: nowrap; font-size: 30px;" />
+            <ui:Button text="Begin" name="Pause" focusable="false" class="button" style="font-size: 40px;" />
+            <ui:Button text="Debug Results" display-tooltip-when-elided="true" name="DebugResults" focusable="false" class="button" style="white-space: nowrap; font-size: 30px;" />
             <ui:ProgressBar name="TestProgressBar" title="0 / 54" style="width: 70%; background-color: rgb(255, 255, 255); color: rgb(255, 255, 255);" />
         </ui:VisualElement>
         <ui:VisualElement name="PatientView" class="CameraView" />

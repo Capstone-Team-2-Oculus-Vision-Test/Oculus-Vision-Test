@@ -19,8 +19,6 @@ public class PractitionerUI : MonoBehaviour
         var buttonRestart = root.Q<Button>("Restart");
         var buttonCancel = root.Q<Button>("Cancel");
         var buttonDebug = root.Q<Button>("DebugResults");
-
-        buttonPause.text = "Begin";
         
         buttonCancel.clicked += () =>
         {
@@ -39,7 +37,7 @@ public class PractitionerUI : MonoBehaviour
         };
         buttonRestart.clicked += () =>
         {
-            buttonPause.text = buttonPause.text == "Resume" ? "Pause" : "Resume";
+            buttonPause.text = "Begin";
             gridLogic.ResetTest();
         };
         if (Debug)

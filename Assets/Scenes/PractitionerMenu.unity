@@ -701,8 +701,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newTestTemplate: {fileID: 9197481963319205126, guid: 59783ede22a6b924891cc45cdede4daa, type: 3}
+  testListEntryTemplate: {fileID: 9197481963319205126, guid: 8c1edbe8e6e945999aa26cae97ebcadf, type: 3}
   startMenuTemplate: {fileID: 9197481963319205126, guid: eb709b0e795fe454696d8d8a91c2f884, type: 3}
   previousTestsTemplate: {fileID: 9197481963319205126, guid: 45507dadd8a28d94196136208e5b0f31, type: 3}
   resultsTemplate: {fileID: 9197481963319205126, guid: c4080b227472f8842b915d1f5271d109, type: 3}
+  settingsTemplate: {fileID: 9197481963319205126, guid: 1f8208fe669bb4f45911a89e2c887b4f, type: 3}
   resultCamera: {fileID: 1679499417}
   textPrefab: {fileID: 7107708958832311981, guid: 7c03012ac5a120f45b694a896251d261, type: 3}

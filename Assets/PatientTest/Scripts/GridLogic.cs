@@ -45,21 +45,31 @@ namespace PatientTest.Scripts
         // Start is called before the first frame update
         private void Start()
         {
+            // Get settings from PractitionerUI
+            minInputDelay = PlayerPrefs.GetFloat("MinInputDelay", 1f);
+            maxInputDelay = PlayerPrefs.GetFloat("MaxInputDelay", 2.3f);
+            maxBrightness = PlayerPrefs.GetFloat("MaxBrightness", 1f);
+            sphereDelay = PlayerPrefs.GetFloat("StimulusTiming", 0.5f);
+            
+            // Set up test
             _renderer = sphere.GetComponent<Renderer>();
             sphere.transform.localScale = new Vector3(pointFOV / 1.2f, pointFOV / 1.2f, pointFOV / 1.2f);
             practitionerLight.transform.localScale = new Vector3(pointFOV / 1.2f, pointFOV / 1.2f, pointFOV / 1.2f);
-            //_testCoroutine = StartTest((EyeEnum)PlayerPrefs.GetInt("Eye"), (TestEnum)PlayerPrefs.GetInt("TestType"));
             _testCoroutine = StartTest(resultsDTO.EyeTested, resultsDTO.Test);
             StartCoroutine(_testCoroutine);
         }
 
         private void FixedUpdate()
         {
-            if (OVRInput.GetDown(OVRInput.Button.One) && _allowInput)
-            {
-                HandleInput(_randomIndex);
-                _responded = true;
-            }
+            if (!_allowInput || !CheckInput() || _responded) return;
+            HandleInput(_randomIndex);
+            _responded = true;
+        }
+
+        private static bool CheckInput()
+        {
+            return (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space) || Input.GetKey(KeyCode.Space) 
+                    || OVRInput.GetDown(OVRInput.Button.One));
         }
 
         public void StopTest()
@@ -75,6 +85,9 @@ namespace PatientTest.Scripts
             if (OVRInput.GetDown(OVRInput.Button.Any))
                 return;
             StopCoroutine(_testCoroutine);
+            sphere.transform.localPosition = Vector3.zero;
+            sphere.SetActive(false);
+            practitionerLight.transform.localPosition = Vector3.zero;
             eyeResults.Clear();
             points.Clear();
             _testCoroutine = null;
@@ -141,9 +154,9 @@ namespace PatientTest.Scripts
                 sphere.transform.localPosition = position;
                 practitionerLight.transform.localPosition = position;
                 SetSphereOpacity(opacity);
-                sphere.SetActive(true);
                 _allowInput = true;
-                yield return new WaitForSeconds(sphereDelay); //I think this needs to be a seperate coroutine as it prohibits grabbing input while sphere is active
+                sphere.SetActive(true);
+                yield return new WaitForSeconds(sphereDelay);
                 sphere.SetActive(false);
                 yield return new WaitForSeconds(delayTime);
                 _allowInput = false;
@@ -191,7 +204,7 @@ namespace PatientTest.Scripts
             float maxHorizontal = 27 * scalingFactor;
             float maxVertical = (test == TestEnum.TwentyDashTwo ? 21 * scalingFactor : 27 * scalingFactor);
 
-            for (var xAxis = 3 * scalingFactor; xAxis <= maxHorizontal + safetyPad; xAxis += 6 * scalingFactor)
+            for (float xAxis = 3 * scalingFactor; xAxis <= maxHorizontal + safetyPad; xAxis += 6 * scalingFactor)
             {
 
                 if (xAxis > 9 * scalingFactor)
@@ -199,7 +212,7 @@ namespace PatientTest.Scripts
                     maxVertical -= 6 * scalingFactor;
                 }
 
-                for (var yAxis = 3 * scalingFactor; yAxis <= maxVertical + safetyPad; yAxis += 6 * scalingFactor)
+                for (float yAxis = 3 * scalingFactor; yAxis <= maxVertical + safetyPad; yAxis += 6 * scalingFactor)
                 {
                     var quadrantOne = new Vector4(xAxis, yAxis, 10, brightness);
                     var quadrantTwo = new Vector4(-xAxis, yAxis, 10, brightness);

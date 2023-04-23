@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Utility
 {
@@ -17,7 +16,8 @@ namespace Utility
             TwentyDashTwo
         }
 
-        public static readonly Vector4[] TestData = {
+        public static readonly Vector4[] TestData =
+        {
             new(3, 3, 10, 20),
             new(-3, 3, 10, 30),
             new(-3, -3, 10, 35),
