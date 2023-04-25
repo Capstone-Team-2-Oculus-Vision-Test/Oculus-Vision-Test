@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using static Utility.UtilityScripts;
 using System;
 using PatientTest.Scripts;
+using Unity.VisualScripting;
 using Utility;
 using static PatientTest.Scripts.DataTransfer;
 
@@ -130,15 +131,15 @@ namespace PractitionerMenu.Scripts
                 saveResultsButton.SetEnabled(false);
             };
             resultsBackButton.clicked += GoToMainMenu;
-            savePdfButton.clicked += SavePdf;
+            savePdfButton.clicked += () =>
+            {
+                PdfGenerate();
+                savePdfButton.text = "PDF Saved";
+                savePdfButton.SetEnabled(false);
+            };
 
             // Assign values to ui elements
             SetResultValues();
-        }
-
-        private void SavePdf()
-        {
-            throw new NotImplementedException();
         }
 
         private void SetResultValues()

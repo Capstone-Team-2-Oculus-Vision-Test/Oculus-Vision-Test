@@ -13,7 +13,7 @@ namespace PatientTest.Scripts
     {
         public static TestResultsDTO resultsDTO = new();
         public static PatientDTO patientDTO = new();
-        public static void PdfGenerate() //Placeholder PDF content for now
+        public static void PdfGenerate()
         {
             Document.Create(container =>
             {
@@ -22,32 +22,81 @@ namespace PatientTest.Scripts
                     page.Size(PageSizes.A4);
                     page.Margin(2, Unit.Centimetre);
                     page.PageColor(Colors.White);
-                    page.DefaultTextStyle(x => x.FontSize(20));
-    
+                    page.DefaultTextStyle(x => x.FontSize(12));
+
                     page.Header()
-                        .Text("Hello PDF!")
-                        .SemiBold().FontSize(36).FontColor(Colors.Blue.Medium);
-    
+                        .Background(Colors.Grey.Lighten1)
+                        .Text(" Visual Field Analysis")
+                        .SemiBold().FontSize(20).FontColor(Colors.Black);
+
                     page.Content()
                         .PaddingVertical(1, Unit.Centimetre)
-                        .Column(x =>
+                        .Column(column =>
                         {
-                            x.Spacing(20);
-            
-                            x.Item().Text(Placeholders.LoremIpsum());
-                            x.Item().Image(Placeholders.Image(200, 100));
+                            column.Spacing(8);
+                            column.Item().Row(row =>
+                            {
+                                //row.ConstantItem(100).Image("tree.jpg");
+                                row.RelativeItem().Column(innerColumn =>
+                                {
+                                    innerColumn.Spacing(8);
+                                    innerColumn.Item().Text("Patient Name: " + patientDTO.FirstName + patientDTO.LastName);
+                                    innerColumn.Item().Text("ID: " + patientDTO.ID);
+                                });
+                                row.ConstantItem(100).Column(innerColumn =>
+                                {
+                                    innerColumn.Spacing(8);
+                                    innerColumn.Item().Text("Sex: " + patientDTO.Sex);
+                                    innerColumn.Item().Text("Eye: ");
+                                });
+                            });
+                            column.Item().Row(row =>
+                            {
+                                row.RelativeItem().Text("fsdg");
+                            });
                         });
-    
+
                     page.Footer()
                         .AlignCenter()
-                        .Text(x =>
+                        .Text(text =>
                         {
-                            x.Span("Page ");
-                            x.CurrentPageNumber();
+                            text.Span("Page ");
+                            text.CurrentPageNumber();
                         });
                 });
-            })
-            .GeneratePdf("hello.pdf");
+                /*
+                container.Page(page =>
+                {
+                    page.Size(PageSizes.A4);
+                    page.Margin(2, Unit.Centimetre);
+                    page.PageColor(Colors.White);
+                    page.DefaultTextStyle(x => x.FontSize(12));
+
+                    page.Header()
+                        .Background(Colors.Grey.Lighten1)
+                        .Text(" Visual Field Analysis")
+                        .SemiBold().FontSize(20).FontColor(Colors.Black);
+
+                    page.Content()
+                        .PaddingVertical(1, Unit.Centimetre)
+                        .Column(column =>
+                        {
+                            column.Spacing(20);
+
+                            column.Item().Text("Here's some more details (not really)");
+                            column.Item().Image(Placeholders.Image(200,100));
+                        });
+
+                    page.Footer()
+                        .AlignCenter()
+                        .Text(text =>
+                        {
+                            text.Span("Page ");
+                            text.CurrentPageNumber();
+                        });
+                        
+                });*/
+            }).GeneratePdf("example.pdf");
         }
     }
     
