@@ -1371,6 +1371,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
+      propertyPath: textPrefab
+      value: 
+      objectReference: {fileID: 7107708958832311981, guid: 7c03012ac5a120f45b694a896251d261, type: 3}
+    - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
       propertyPath: pointPrefab
       value: 
       objectReference: {fileID: 9084144747343415146, guid: ce2fa19f87d45f548add8331b94b1281, type: 3}
@@ -1393,14 +1397,6 @@ PrefabInstance:
     - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
       propertyPath: maxBrightness
       value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
-      propertyPath: maxInputDelay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
-      propertyPath: minInputDelay
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3145226004774969762, guid: 1c11877a73b58b64b83a1a737df3db16, type: 3}
       propertyPath: pointDistance

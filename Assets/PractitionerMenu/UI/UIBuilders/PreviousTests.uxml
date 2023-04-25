@@ -2,10 +2,9 @@
     <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/ListEntry.uss?fileID=7433441132597879392&amp;guid=c58873dc25dd44bab368925e4c8fe3e8&amp;type=3#ListEntry" />
     <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/BackButton.uss?fileID=7433441132597879392&amp;guid=cf94f838b797fee49a7c80202534a9b8&amp;type=3#BackButton" />
     <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/ButtonContainerBottomPage.uss?fileID=7433441132597879392&amp;guid=c837dfe740e366e418b8a261057aa59d&amp;type=3#ButtonContainerBottomPage" />
-    <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/TitleLabel.uss?fileID=7433441132597879392&amp;guid=18d83900b4e54ed4b9ab9524dcf09aff&amp;type=3#TitleLabel" />
     <ui:VisualElement style="height: 100%; width: 100%; align-items: stretch; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
         <ui:VisualElement name="TitleList" style="align-items: center; justify-content: flex-start; height: 100%;">
-            <ui:Label text="Patients" display-tooltip-when-elided="true" />
+            <ui:Label text="Patients" display-tooltip-when-elided="true" style="font-size: 100px; color: rgba(185, 185, 185, 255);" />
             <ui:ListView focusable="true" name="testList" style="width: 400px;" />
         </ui:VisualElement>
         <ui:VisualElement name="ButtonContainer" class="ButtonContainer">

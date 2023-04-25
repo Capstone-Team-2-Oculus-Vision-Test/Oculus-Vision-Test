@@ -160,7 +160,7 @@ namespace PractitionerMenu.Scripts
                     point.z);
                 TextMeshPro text = Instantiate(textPrefab, _pointsParent.transform);
                 text.transform.localPosition = position;
-                text.text = point.w.ToString(CultureInfo.InvariantCulture);
+                text.text = $"{point.w}";
             }
 
             // Assign values to ui elements

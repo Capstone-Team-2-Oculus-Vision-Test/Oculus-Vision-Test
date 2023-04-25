@@ -1,4 +1,4 @@
-﻿.button {
+.button {
     width: 70%;
     height: 10%;
     -unity-text-outline-width: 0;
@@ -15,7 +15,7 @@
     -unity-font-style: normal;
     -unity-font: url('project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#Arial');
     -unity-text-align: middle-center;
-    font-size: 400%;
+    font-size: 65px;
 }
 
 .unity-progress-bar__progress {

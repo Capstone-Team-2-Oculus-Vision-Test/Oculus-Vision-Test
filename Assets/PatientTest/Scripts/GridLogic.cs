@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using PractitionerMenu.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using Utility;
 using static Utility.UtilityScripts;
 using static PatientTest.Scripts.DataTransfer;
 using Random = UnityEngine.Random;
@@ -12,7 +14,7 @@ namespace PatientTest.Scripts
 {
     public class GridLogic : MonoBehaviour
     {
-        public List<Vector4> eyeResults;
+        [SerializeField] private TextMeshPro textPrefab;
         public GameObject sphere;
         public GameObject pointPrefab;
         public GameObject pointsFolder;
@@ -28,6 +30,7 @@ namespace PatientTest.Scripts
         public float pointFOV;
         public float pointDistance;
         public float maxBrightness;
+        public List<Vector4> eyeResults;
         private Material _sphereMaterial;
         private IEnumerator _testCoroutine;
         private bool _pause;
@@ -68,8 +71,8 @@ namespace PatientTest.Scripts
 
         private static bool CheckInput()
         {
-            return (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space) || Input.GetKey(KeyCode.Space) 
-                    || OVRInput.GetDown(OVRInput.Button.One));
+            return Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space) || Input.GetKey(KeyCode.Space) 
+                   || OVRInput.GetDown(OVRInput.Button.One);
         }
 
         public void StopTest()
@@ -90,6 +93,15 @@ namespace PatientTest.Scripts
             practitionerLight.transform.localPosition = Vector3.zero;
             eyeResults.Clear();
             points.Clear();
+            // Get the parent object's Transform component
+            Transform parentTransform = pointsFolder.transform;
+
+            // Iterate over all the child objects and destroy them
+            for (var i = 0; i < parentTransform.childCount; i++)
+            {
+                GameObject childObject = parentTransform.GetChild(i).gameObject;
+                GameObject.Destroy(childObject);
+            }
             _testCoroutine = null;
             _testCoroutine = StartTest(_testParameters.Item1, _testParameters.Item2);
             StartCoroutine(_testCoroutine);
@@ -117,7 +129,8 @@ namespace PatientTest.Scripts
             MainMenu.SetShowResults(true);
             SceneManager.LoadScene("PractitionerMenu");
         }
-        public IEnumerator StartTest(EyeEnum eye, TestEnum test)
+
+        private IEnumerator StartTest(EyeEnum eye, TestEnum test)
         {
             TestResultsDTO results = resultsDTO;
 
@@ -188,6 +201,15 @@ namespace PatientTest.Scripts
             point.w /= 2;
             eyeResults.Add(point);
             points.RemoveAt(index);
+
+            // replace practitioner sphere with text
+            Transform pointTransform = pointsFolder.transform.Find($"{point.x} {point.y}");
+            if (!pointTransform) return;
+            GameObject pointObjectReference = pointTransform.gameObject;
+            TextMeshPro textObject = Instantiate(textPrefab, pointTransform);
+            textObject.transform.SetParent(pointsFolder.transform);
+            textObject.text = $"{point.w}";
+            Destroy(pointObjectReference);
         }
 
         private void SetSphereOpacity(float opacity)
@@ -268,7 +290,10 @@ namespace PatientTest.Scripts
                 prefab.transform.localScale = new Vector3(pointFOV / 1.2f, pointFOV / 1.2f, pointFOV / 1.2f);
                 prefab.transform.parent = pointsFolder.transform;
                 prefab.layer = pointsFolder.layer;
-                prefab.transform.localPosition = position;
+                Vector3 localPosition = prefab.transform.localPosition;
+                prefab.name = $"{localPosition.x} {localPosition.y}";
+                localPosition = position;
+                prefab.transform.localPosition = localPosition;
             }
         }
 
