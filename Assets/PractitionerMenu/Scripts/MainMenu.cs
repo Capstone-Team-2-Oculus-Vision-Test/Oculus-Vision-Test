@@ -97,6 +97,7 @@ namespace PractitionerMenu.Scripts
         {
             root.Q<TextField>("MinInputDelay").value = $"{PlayerPrefs.GetFloat("MinInputDelay", 1f)}";
             root.Q<TextField>("MaxInputDelay").value = $"{PlayerPrefs.GetFloat("MaxInputDelay", 2.3f)}";
+            root.Q<TextField>("MinBrightness").value = $"{PlayerPrefs.GetFloat("MinBrightness", 0f)}";
             root.Q<TextField>("MaxBrightness").value = $"{PlayerPrefs.GetFloat("MaxBrightness", 100f)}";
             root.Q<TextField>("StimulusTiming").value = $"{PlayerPrefs.GetFloat("StimulusTiming", 0.2f)}";
         }
@@ -105,6 +106,7 @@ namespace PractitionerMenu.Scripts
         {
             PlayerPrefs.SetFloat("MinInputDelay", float.Parse(root.Q<TextField>("MinInputDelay").value));
             PlayerPrefs.SetFloat("MaxInputDelay", float.Parse(root.Q<TextField>("MaxInputDelay").value));
+            PlayerPrefs.SetFloat("MinBrightness", float.Parse(root.Q<TextField>("MinBrightness").value));
             PlayerPrefs.SetFloat("MaxBrightness", float.Parse(root.Q<TextField>("MaxBrightness").value));
             PlayerPrefs.SetFloat("StimulusTiming", float.Parse(root.Q<TextField>("StimulusTiming").value));
         }
