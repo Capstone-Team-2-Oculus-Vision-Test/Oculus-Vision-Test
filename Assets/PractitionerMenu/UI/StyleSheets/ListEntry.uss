@@ -1,0 +1,34 @@
+#list-entry {
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 10px;
+    border-width: 2px;
+    border-radius: 15px;
+    background-color: rgb(180, 162, 86);
+    border-color: rgb(49, 26, 17);
+}
+
+#list-entry:hover
+{
+    background-color: rgb(143, 167, 181);
+}
+
+.unity-collection-view__item--selected > #list-entry{
+    background-color: rgb(130, 167, 178);
+}
+
+.unity-collection-view__item--selected{
+    background-color: rgb(56, 56, 56);
+    color: rgb(0, 0, 0);
+}
+
+.unity-collection-view__item:hover
+{
+    background-color: rgb(56, 56, 56);
+}
+
+#name-id {
+    -unity-font-style: bold;
+    font-size: 18px;
+    color: rgb(0, 0, 0);
+}

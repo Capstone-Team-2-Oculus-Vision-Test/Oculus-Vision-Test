@@ -1,0 +1,32 @@
+.unity-base-field {
+    font-size: 26px;
+}
+
+.unity-base-text-field {
+    flex-direction: column;
+}
+
+.unity-text-field {
+}
+
+.unity-label {
+    color: rgb(255, 255, 255);
+    font-size: 33px;
+}
+
+.unity-base-text-field__input {
+    background-color: rgb(188, 188, 188);
+}
+
+.unity-base-popup-field {
+    width: 100%;
+    flex-direction: column;
+}
+
+.inputBox {
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 10%;
+}

@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/MenuContainer.uss?fileID=7433441132597879392&amp;guid=604f2dbcbf8145045a3594622a6cfdd0&amp;type=3#MenuContainer" />
+    <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/BackButton.uss?fileID=7433441132597879392&amp;guid=cf94f838b797fee49a7c80202534a9b8&amp;type=3#BackButton" />
+    <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/ButtonContainerBottomPage.uss?fileID=7433441132597879392&amp;guid=c837dfe740e366e418b8a261057aa59d&amp;type=3#ButtonContainerBottomPage" />
+    <Style src="project://database/Assets/PractitionerMenu/UI/StyleSheets/SettingsPage.uss?fileID=7433441132597879392&amp;guid=91df53c0c7e8fb545816ef3d2c7a0085&amp;type=3#SettingsPage" />
+    <ui:VisualElement name="Container" class="MenuContainer">
+        <ui:VisualElement name="PageTitle">
+            <ui:Label text="Settings" display-tooltip-when-elided="true" name="Title" class="unity-label" style="font-size: 100px; color: rgb(197, 197, 197);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Settings" style="flex-grow: 1; width: 600px;">
+            <ui:ScrollView style="flex-grow: 1;">
+                <ui:TextField picking-mode="Ignore" label="Min Input Delay" value="1" text="1" name="MinInputDelay" focusable="true" tooltip="Minimum delay between points" class="unity-label" style="font-size: 30px; flex-direction: column; color: rgb(255, 255, 255);" />
+                <ui:TextField picking-mode="Ignore" label="Max Input Delay" value="2.3" text="2.3" name="MaxInputDelay" focusable="true" tooltip="Maximum delay between points" class="unity-label" style="font-size: 30px; flex-direction: column; color: rgb(255, 255, 255);" />
+                <ui:TextField picking-mode="Ignore" label="Max Brightness" value="100" text="100" name="MaxBrightness" focusable="true" tooltip="Maximum stimulus brightness" class="unity-label" style="font-size: 30px; flex-direction: column; color: rgb(255, 255, 255);" />
+                <ui:TextField picking-mode="Ignore" label="Stimulus Display Time" value="0.2" text="0.2" name="StimulusTiming" focusable="true" tooltip="Amount of time, in seconds, that stimulus is displayed to patient" class="unity-label" style="font-size: 30px; flex-direction: column; color: rgb(255, 255, 255);" />
+            </ui:ScrollView>
+        </ui:VisualElement>
+        <ui:VisualElement name="Buttons" class="ButtonContainer" style="width: 100%;">
+            <ui:Button text="Back" display-tooltip-when-elided="true" name="Back" />
+            <ui:Button text="Save Settings" display-tooltip-when-elided="true" name="SaveSettings" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,4 @@
+.unity-label {
+    font-size: 100px;
+    color: rgba(185, 185, 185, 255);
+}
