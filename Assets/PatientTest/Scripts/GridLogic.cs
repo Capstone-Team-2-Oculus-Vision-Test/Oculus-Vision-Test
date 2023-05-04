@@ -50,8 +50,9 @@ namespace PatientTest.Scripts
         {
             // Get settings from PractitionerUI
             minInputDelay = PlayerPrefs.GetFloat("MinInputDelay", 1f);
-            maxInputDelay = PlayerPrefs.GetFloat("MaxInputDelay", 2.3f);
-            maxBrightness = PlayerPrefs.GetFloat("MaxBrightness", 1f);
+            maxInputDelay = PlayerPrefs.GetFloat("MaxInputDelay", 2.3f); 
+            brightness = PlayerPrefs.GetFloat("MinBrightness", 20f);
+            maxBrightness = PlayerPrefs.GetFloat("MaxBrightness", 100f);
             sphereDelay = PlayerPrefs.GetFloat("StimulusTiming", 0.5f);
             
             // Set up test

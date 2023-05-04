@@ -40,14 +40,14 @@ namespace PatientTest.Scripts
                                 row.RelativeItem().Column(innerColumn =>
                                 {
                                     innerColumn.Spacing(8);
-                                    innerColumn.Item().Text("Patient Name: " + patientDTO.FirstName + patientDTO.LastName);
-                                    innerColumn.Item().Text("ID: " + patientDTO.ID);
+                                    innerColumn.Item().Text($"Patient Name: {patientDTO.FirstName} {patientDTO.LastName}");
+                                    innerColumn.Item().Text($"ID: {patientDTO.ID}");
                                 });
                                 row.ConstantItem(100).Column(innerColumn =>
                                 {
                                     innerColumn.Spacing(8);
                                     innerColumn.Item().Text("Sex: " + patientDTO.Sex);
-                                    innerColumn.Item().Text("Eye: ");
+                                    innerColumn.Item().Text("Eye: " + resultsDTO.EyeTested.ToString());
                                 });
                             });
                             column.Item().Row(row =>
